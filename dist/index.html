@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenStudy // Real-time Personal Student Planner</title>
+  <link rel="manifest" href="./manifest.json">
+  
+  <!-- iOS Safari PWA Capabilities -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ZenStudy">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <script type="module" crossorigin src="/assets/index-DUlliiki.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DL1HO4Wj.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- LEFT SIDEBAR: Navigation (Visible on Desktop) -->
+    <aside class="sidebar glass-panel" id="app-sidebar">
+      <div class="brand-section">
+        <span class="brand-icon">⚡</span>
+        <h1 class="brand-name">ZenStudy</h1>
+      </div>
+      
+      <div class="user-profile">
+        <div class="avatar" id="display-avatar">R</div>
+        <div class="user-info">
+          <span class="username" id="display-username">Rohith</span>
+          <span class="user-role" id="display-user-role">Premium Student</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="dashboard" id="nav-dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-tab="tasks" id="nav-tasks">📝 Tasks</button>
+        <button class="nav-item" data-tab="focus" id="nav-focus">⏳ Focus Timer</button>
+        <button class="nav-item" data-tab="schedule" id="nav-schedule">📅 Class Timetable</button>
+        <button class="nav-item" data-tab="settings" id="nav-settings">⚙️ Settings</button>
+      </nav>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAVIGATION (Visible only on Mobile) -->
+    <nav class="bottom-nav glass-panel">
+      <button class="bottom-nav-item active" data-tab="dashboard">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="tasks">
+        <span class="nav-icon">📝</span>
+        <span class="nav-label">Tasks</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="focus">
+        <span class="nav-icon">⏳</span>
+        <span class="nav-label">Focus</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="schedule">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Timetable</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </button>
+    </nav>
+
+    <!-- MAIN DISPLAY WRAPPER: Handles active views -->
+    <main class="main-content-wrapper">
+      
+      <!-- TAB 1: Dashboard -->
+      <section id="view-dashboard" class="page-section active">
+        <div class="header-row">
+          <div class="greeting-section">
+            <h2 id="greeting-title">Hello, Rohith</h2>
+            <p id="motivational-quote">"Focus is a muscle, keep training it."</p>
+          </div>
+        </div>
+        
+        <!-- Top Stats Row -->
+        <div class="top-stats-row">
+          <div class="glass-panel stat-card streak">
+            <div class="stat-icon-wrapper">🔥</div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-streak-val">0</span>
+              <span class="stat-label">Daily Streak</span>
+            </div>
+          </div>
+          <div class="glass-panel stat-card focus">
+            <div class="stat-icon-wrapper">⏳</div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-focus-val">0m</span>
+              <span class="stat-label">Study Focus</span>
+            </div>
+          </div>
+          <div class="glass-panel stat-card completed-stats">
+            <div class="stat-icon-wrapper">✅</div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-done-val">0</span>
+              <span class="stat-label">Tasks Done</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today Progress Ring and Weekly Graph Row -->
+        <div class="progress-analytics-grid">
+          <div class="glass-panel progress-panel-wrapper">
+            <div id="progress-ring-container">
+              <!-- Rendered by components.js -->
+            </div>
+            <div class="progress-panel-info">
+              <h3>Today's Target</h3>
+              <p id="progress-card-subtitle">Complete daily tasks to unlock milestones.</p>
+            </div>
+          </div>
+          
+          <div class="glass-panel weekly-chart-card">
+            <div class="chart-header">
+              <h3>Weekly Completion History</h3>
+            </div>
+            <div id="weekly-chart-container">
+              <!-- Rendered by components.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Upcoming Deadlines -->
+        <div class="glass-panel dashboard-deadlines">
+          <div class="section-title-wrapper">
+            <span class="section-title">Major Deadlines</span>
+            <button class="btn-mini-add" id="btn-add-exam" title="Add Deadline">+</button>
+          </div>
+          <div class="exams-list" id="upcoming-exams-list">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Tasks View -->
+      <section id="view-tasks" class="page-section">
+        <div class="glass-panel tasks-panel">
+          <div class="tasks-header">
+            <h2>My Tasks</h2>
+            <button class="btn-primary" id="btn-create-task">
+              <span>+ Add Task</span>
+            </button>
+          </div>
+          <div class="filter-tabs">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="today">Today</button>
+            <button class="tab-btn" data-filter="pending">Pending</button>
+            <button class="tab-btn" data-filter="high">High Priority</button>
+            <button class="tab-btn" data-filter="completed">Completed</button>
+          </div>
+          
+          <!-- Scrollable Task List -->
+          <div class="task-list" id="main-task-list">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Focus Timer View -->
+      <section id="view-focus" class="page-section">
+        <div class="glass-panel pomodoro-card-wrapper">
+          <h2>Study Focus Timer</h2>
+          <p class="section-subtitle">Use the Pomodoro technique to divide and Master your time.</p>
+          
+          <!-- Pomodoro Widget -->
+          <div class="pomodoro-card" id="pomodoro-widget">
+            <div class="timer-modes">
+              <button class="timer-mode-btn active" id="timer-mode-work" data-mode="work">Focus</button>
+              <button class="timer-mode-btn" id="timer-mode-break" data-mode="break">Break</button>
+            </div>
+            <div class="timer-display-wrapper">
+              <svg width="180" height="180" viewBox="0 0 180 180" class="timer-circle-svg">
+                <defs>
+                  <linearGradient id="timerRingGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8b5cf6" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <circle cx="90" cy="90" r="80" class="timer-track" />
+                <circle cx="90" cy="90" r="80" class="timer-progress-ring" id="timer-ring" stroke="url(#timerRingGlow)" stroke-dasharray="502.65" stroke-dashoffset="0" />
+              </svg>
+              <div class="timer-numbers" id="timer-text">25:00</div>
+            </div>
+            <div class="timer-controls">
+              <button class="btn-timer btn-start" id="btn-timer-toggle" title="Start Focus Mode">▶</button>
+              <button class="btn-timer" id="btn-timer-reset" title="Reset Session">🔄</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Schedule View -->
+      <section id="view-schedule" class="page-section">
+        <div class="glass-panel schedule-panel">
+          <div class="tasks-header">
+            <h2>Today's Timetable</h2>
+            <button class="btn-primary" id="btn-add-schedule" title="Add Class">
+              <span>+ Add Class</span>
+            </button>
+          </div>
+          <p class="section-subtitle" style="margin-bottom: 12px;">Scanner scans and highlights your current live class in real-time.</p>
+          
+          <div class="timetable-day-selector">
+            <button class="day-tab-btn" data-day="1">Mon</button>
+            <button class="day-tab-btn" data-day="2">Tue</button>
+            <button class="day-tab-btn" data-day="3">Wed</button>
+            <button class="day-tab-btn" data-day="4">Thu</button>
+            <button class="day-tab-btn" data-day="5">Fri</button>
+            <button class="day-tab-btn" data-day="6">Sat</button>
+            <button class="day-tab-btn" data-day="0">Sun</button>
+          </div>
+
+          <div class="schedule-list" id="class-schedule-list">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: Settings View -->
+      <section id="view-settings" class="page-section">
+        <div class="glass-panel settings-panel">
+          <h2>Application Settings</h2>
+          <p class="section-subtitle">Customize user profile and configuration settings.</p>
+          
+          <div class="settings-section">
+            <!-- Personal Profile Customizer -->
+            <div class="settings-card">
+              <h3>Personal Profile</h3>
+              <div class="form-row" style="margin-top: 12px;">
+                <div class="form-group">
+                  <label for="settings-username">Profile Name</label>
+                  <input type="text" id="settings-username" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                  <label for="settings-user-role">Role / Goal</label>
+                  <input type="text" id="settings-user-role" placeholder="e.g. Premium Student">
+                </div>
+              </div>
+            </div>
+
+            <!-- Pomodoro Durations -->
+            <div class="settings-card">
+              <h3>Focus & Break Durations</h3>
+              <div class="form-row" style="margin-top: 12px;">
+                <div class="form-group">
+                  <label for="settings-pomo-work">Focus Period (mins)</label>
+                  <input type="number" id="settings-pomo-work" min="1" max="120" value="25">
+                </div>
+                <div class="form-group">
+                  <label for="settings-pomo-break">Break Period (mins)</label>
+                  <input type="number" id="settings-pomo-break" min="1" max="60" value="5">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Notifications Toggle -->
+            <div class="settings-card flex-row-settings">
+              <div>
+                <h3>Push Notifications</h3>
+                <p style="font-size: 0.75rem; color: hsl(var(--text-secondary)); margin-top: 2px;">Enable sound alerts and system banners</p>
+              </div>
+              <button type="button" class="btn-secondary" id="btn-toggle-notifications">Disabled</button>
+            </div>
+            
+            <!-- Sound alert customization -->
+            <div class="settings-card">
+              <h3>Notification Alarm Sound</h3>
+              <select id="settings-sound-select" style="margin: 12px 0;">
+                <option value="default">Default Synthesizer Chime</option>
+                <option value="chime">Lofi Melodic Ring</option>
+                <option value="bell">Deep Resonant Gong</option>
+                <option value="custom">Custom Uploaded Song</option>
+              </select>
+              
+              <!-- Custom File upload zone -->
+              <div class="custom-audio-uploader" id="audio-uploader-zone">
+                <input type="file" id="custom-audio-file-input" accept="audio/*">
+                <div class="audio-uploader-label">
+                  <span class="uploader-icon">🎵</span>
+                  <span>Drag & drop your alarm song here or browse</span>
+                  <span class="file-hint">Accepts MP3, WAV, M4A up to 10MB</span>
+                </div>
+              </div>
+              
+              <!-- Display when custom song active -->
+              <div class="audio-active-display" id="custom-audio-active-box" style="display: none;">
+                <div class="audio-active-details">
+                  <span class="audio-active-name" id="custom-audio-filename">no-file.mp3</span>
+                  <span class="audio-active-status">Custom Audio Active</span>
+                </div>
+                <button class="btn-mini-danger" id="btn-delete-custom-audio">Remove</button>
+              </div>
+              
+              <div class="audio-actions-row">
+                <button type="button" class="btn-mini-test" id="btn-test-sound">▶ Test Selected Sound</button>
+                <button type="button" class="btn-mini-test" id="btn-stop-test-sound" style="display: none; background: hsla(var(--color-danger), 0.1); border-color: hsla(var(--color-danger), 0.2); color: hsl(var(--color-danger));">⏹ Stop Playback</button>
+              </div>
+            </div>
+
+            <!-- Subject Manager (Moved from sidebar to settings tab) -->
+            <div class="settings-card">
+              <div class="section-title-wrapper">
+                <h3>My Subjects</h3>
+                <button class="btn-primary" id="btn-add-subject" title="Add Subject" style="padding: 6px 12px; font-size: 0.8rem;">
+                  <span>+ Subject</span>
+                </button>
+              </div>
+              <p class="section-subtitle" style="margin-bottom: 12px;">Manage courses and visual color schemes.</p>
+              <div class="subject-list" id="sidebar-subject-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="btn-save-settings" style="width: 100%; justify-content: center; padding: 14px; font-size: 1rem;">Save & Apply Settings</button>
+            <button type="button" id="settings-modal-close" style="display: none;"></button> <!-- Keep dummy close button for code compatibility -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= MODALS / BOTTOM SHEETS SYSTEM ================= -->
+  
+  <!-- MODAL: Create/Edit Task -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal-content bottom-sheet">
+      <div class="pull-handle"></div>
+      <div class="modal-header">
+        <h3 id="task-modal-title">Create Task</h3>
+        <button class="btn-close-modal" id="task-modal-close">&times;</button>
+      </div>
+      <form id="task-form">
+        <input type="hidden" id="task-edit-id">
+        <div class="form-group">
+          <label for="task-title">Title</label>
+          <input type="text" id="task-title" required placeholder="Homework, assignment, revision...">
+        </div>
+        <div class="form-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" rows="2" placeholder="Provide extra context, links, details..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-subject">Subject</label>
+            <select id="task-subject">
+              <option value="">No Subject</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-due">Due Date & Time</label>
+            <input type="datetime-local" id="task-due">
+          </div>
+          <div class="form-group">
+            <label for="task-recurring">Recurrence</label>
+            <select id="task-recurring">
+              <option value="none" selected>None</option>
+              <option value="daily">Daily Reset</option>
+              <option value="weekly">Weekly Reset</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Subtask Builder Area -->
+        <div class="form-group">
+          <label>Subtask Checklist</label>
+          <div class="subtasks-input-container">
+            <div id="subtask-inputs-list">
+              <!-- Dynamically built input lines -->
+            </div>
+            <button type="button" class="btn-secondary" id="btn-add-subtask-input" style="padding: 10px;">+ Add Subtask Step</button>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-task">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-submit-task">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Subject -->
+  <div class="modal-overlay" id="subject-modal">
+    <div class="modal-content bottom-sheet">
+      <div class="pull-handle"></div>
+      <div class="modal-header">
+        <h3>Add New Subject</h3>
+        <button class="btn-close-modal" id="subject-modal-close">&times;</button>
+      </div>
+      <form id="subject-form">
+        <div class="form-group">
+          <label for="subject-name">Subject Name</label>
+          <input type="text" id="subject-name" required placeholder="Chemistry, History, Programming...">
+        </div>
+        
+        <div class="form-group">
+          <label>Preset Color Themes</label>
+          <div class="color-presets-grid">
+            <!-- Preset Color Chips (Red, Amber, Green, Cyan, Blue, Pink, Purple) -->
+            <button type="button" class="color-preset-chip active" data-hue="210" style="background: hsl(210, 80%, 50%);" title="Classic Blue"></button>
+            <button type="button" class="color-preset-chip" data-hue="347" style="background: hsl(347, 87%, 55%);" title="Sunset Red"></button>
+            <button type="button" class="color-preset-chip" data-hue="38" style="background: hsl(38, 92%, 50%);" title="Amber Orange"></button>
+            <button type="button" class="color-preset-chip" data-hue="142" style="background: hsl(142, 72%, 45%);" title="Emerald Green"></button>
+            <button type="button" class="color-preset-chip" data-hue="192" style="background: hsl(192, 91%, 47%);" title="Neon Cyan"></button>
+            <button type="button" class="color-preset-chip" data-hue="280" style="background: hsl(280, 83%, 62%);" title="Royal Violet"></button>
+            <button type="button" class="color-preset-chip" data-hue="325" style="background: hsl(325, 85%, 60%);" title="Hot Pink"></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject-color">Custom Theme Hue Slider</label>
+          <input type="range" id="subject-color" min="0" max="360" value="210" style="width: 100%; margin: 8px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; color: hsl(var(--text-muted));">Fine-tune theme hue value</span>
+            <div id="subject-color-preview" style="width: 28px; height: 28px; border-radius: 50%; background: hsl(210, 80%, 50%); box-shadow: 0 0 12px hsl(210, 80%, 50%); transition: all 0.2s;"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-subject">Cancel</button>
+          <button type="submit" class="btn-primary">Add Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Class Schedule -->
+  <div class="modal-overlay" id="schedule-modal">
+    <div class="modal-content bottom-sheet">
+      <div class="pull-handle"></div>
+      <div class="modal-header">
+        <h3>Schedule Today's Classes</h3>
+        <button class="btn-close-modal" id="schedule-modal-close">&times;</button>
+      </div>
+      <form id="schedule-form">
+        <div class="form-group">
+          <label for="schedule-subject">Subject</label>
+          <select id="schedule-subject" required>
+            <!-- Populated by JS -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="schedule-day">Day of the Week</label>
+          <select id="schedule-day" required>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5">Friday</option>
+            <option value="6">Saturday</option>
+            <option value="0">Sunday</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schedule-start">Start Time</label>
+            <input type="time" id="schedule-start" required>
+          </div>
+          <div class="form-group">
+            <label for="schedule-end">End Time</label>
+            <input type="time" id="schedule-end" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="schedule-location">Location / Link</label>
+          <input type="text" id="schedule-location" placeholder="e.g. Auditorium, Room 102, Zoom Link">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-schedule">Cancel</button>
+          <button type="submit" class="btn-primary">Add Schedule</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Deadline / Exam -->
+  <div class="modal-overlay" id="exam-modal">
+    <div class="modal-content bottom-sheet">
+      <div class="pull-handle"></div>
+      <div class="modal-header">
+        <h3>Schedule Major Deadline</h3>
+        <button class="btn-close-modal" id="exam-modal-close">&times;</button>
+      </div>
+      <form id="exam-form">
+        <div class="form-group">
+          <label for="exam-title">Deadline Name</label>
+          <input type="text" id="exam-title" required placeholder="e.g. Midterm Exam, Thesis Submission, Final Viva">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="exam-subject">Subject</label>
+            <select id="exam-subject">
+              <option value="">No Subject</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exam-date">Date & Time</label>
+            <input type="datetime-local" id="exam-date" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-exam">Cancel</button>
+          <button type="submit" class="btn-primary">Save Deadline</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Alarm Trigger Ring Notification Overlay -->
+  <div class="modal-overlay" id="alarm-trigger-modal">
+    <div class="modal-content alarm-dismiss-modal bottom-sheet">
+      <div class="pull-handle"></div>
+      <h3 style="font-size: 1.6rem;" id="alarm-trigger-title">Study Session Finished!</h3>
+      <div class="alarm-icon-glowing">🔔</div>
+      <p style="color: hsl(var(--text-secondary)); margin-bottom: 24px;" id="alarm-trigger-body">
+        Time is up! Your study focus session is complete. Take a breather.
+      </p>
+      <button class="btn-dismiss-alarm" id="btn-dismiss-alarm-ring" style="width: 100%;">Dismiss Alarm</button>
+    </div>
+  </div>
+
+  <!-- Wire in the application javascript bundle -->
+</body>
+</html>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Space Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0d16" />
+      <stop offset="100%" stop-color="#181c2b" />
+    </linearGradient>
+    
+    <!-- Lightning Bolt Neon Gradient -->
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    
+    <!-- Intense Glow Effect -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="24" result="blur1" />
+      <feGaussianBlur stdDeviation="12" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer Rounded Square Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" stroke="#22273a" stroke-width="8"/>
+  
+  <!-- Subtle circular grid line for high-tech aesthetic -->
+  <circle cx="256" cy="256" r="192" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="4" stroke-dasharray="12,12"/>
+  <circle cx="256" cy="256" r="140" fill="none" stroke="rgba(139, 92, 246, 0.15)" stroke-width="2"/>
+  
+  <!-- Glowing central logo - Lightning Bolt -->
+  <g filter="url(#neonGlow)">
+    <path d="M288 48L128 272h112l-32 192L384 240H272z" fill="url(#boltGrad)"/>
+  </g>
+</svg>
