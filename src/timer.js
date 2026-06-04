@@ -97,7 +97,7 @@ async function handleTimerComplete() {
 }
 
 function triggerNotification(finishedMode, settings) {
-  if (settings.notificationsEnabled && Notification.permission === 'granted') {
+  if ('Notification' in window && settings.notificationsEnabled && Notification.permission === 'granted') {
     const title = finishedMode === 'work' ? 'Study Session Finished!' : 'Break Finished!';
     const body = finishedMode === 'work'
       ? `Awesome job! Take a ${settings.pomodoroBreak} minute break to recharge.`

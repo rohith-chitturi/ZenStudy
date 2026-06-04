@@ -651,6 +651,11 @@ function setupEventListeners() {
 
   // Push notifications permission asker
   document.getElementById('btn-toggle-notifications').addEventListener('click', async () => {
+    if (!isNotificationSupported()) {
+      alert('Push Notifications are not supported by your browser or are blocked in insecure contexts (HTTP). Use localhost or HTTPS.');
+      return;
+    }
+
     if (Notification.permission === 'default') {
       const res = await Notification.requestPermission();
       if (res === 'granted') {
@@ -803,7 +808,7 @@ function startRealtimeMonitors() {
         notifiedTasks.add(task.id);
         
         // Push notification popup
-        if (settings.notificationsEnabled && Notification.permission === 'granted') {
+        if (isNotificationSupported() && settings.notificationsEnabled && Notification.permission === 'granted') {
           new Notification('Upcoming Homework Alert!', {
             body: `"${task.title}" is due in ${Math.round(diffMins)} minutes!`,
             requireInteraction: true
@@ -825,7 +830,7 @@ function startRealtimeMonitors() {
       if (diffMins > 0 && diffMins <= 60 && !notifiedExams.has(exam.id)) {
         notifiedExams.add(exam.id);
 
-        if (settings.notificationsEnabled && Notification.permission === 'granted') {
+        if (isNotificationSupported() && settings.notificationsEnabled && Notification.permission === 'granted') {
           new Notification('Major Deadline Warning!', {
             body: `"${exam.title}" is starting in 1 hour! Get prepared.`,
             requireInteraction: true
@@ -843,9 +848,21 @@ function startRealtimeMonitors() {
   }, 60000); // Pulse check every 60 seconds
 }
 
+function isNotificationSupported() {
+  return 'Notification' in window;
+}
+
 function syncNotificationButtonState() {
   const btn = document.getElementById('btn-toggle-notifications');
   if (!btn) return;
+
+  if (!isNotificationSupported()) {
+    btn.textContent = 'Not Supported';
+    btn.style.color = 'hsl(var(--text-muted))';
+    btn.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+    btn.disabled = true;
+    return;
+  }
 
   if (Notification.permission === 'denied') {
     btn.textContent = 'Blocked';
