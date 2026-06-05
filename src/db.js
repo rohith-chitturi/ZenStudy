@@ -9,18 +9,18 @@ const STORE_NAME = 'appMedia';
 export function initDB() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
-    
+
     request.onupgradeneeded = (e) => {
       const db = e.target.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME);
       }
     };
-    
+
     request.onsuccess = (e) => {
       resolve(e.target.result);
     };
-    
+
     request.onerror = (e) => {
       console.error('IndexedDB initialization failed:', e.target.error);
       reject(e.target.error);
@@ -40,7 +40,7 @@ export async function saveBlob(key, blob) {
     const transaction = db.transaction(STORE_NAME, 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
     const request = store.put(blob, key);
-    
+
     request.onsuccess = () => resolve();
     request.onerror = (e) => reject(e.target.error);
   });
@@ -57,7 +57,7 @@ export async function getBlob(key) {
     const transaction = db.transaction(STORE_NAME, 'readonly');
     const store = transaction.objectStore(STORE_NAME);
     const request = store.get(key);
-    
+
     request.onsuccess = (e) => resolve(e.target.result || null);
     request.onerror = (e) => reject(e.target.error);
   });
@@ -74,7 +74,7 @@ export async function deleteBlob(key) {
     const transaction = db.transaction(STORE_NAME, 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
     const request = store.delete(key);
-    
+
     request.onsuccess = () => resolve();
     request.onerror = (e) => reject(e.target.error);
   });

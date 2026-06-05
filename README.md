@@ -75,21 +75,48 @@ npm run build
 
 ---
 
-## 📱 Mobile Installation (PWA)
+## 📱 Mobile Deployment Options
 
-ZenStudy behaves exactly like a native iOS or Android app when added to your Home Screen.
+ZenStudy can be deployed to your mobile phone either as an installable Progressive Web App (PWA) or compiled as a fully standalone native application using Capacitor.
 
-### Step 1: Expose Dev Server to Wi-Fi Network
-Make the local server accessible to other devices on your home network:
+### Option A: Progressive Web App (Quick)
+ZenStudy behaves exactly like a native app when added to your phone's Home Screen from your mobile browser:
+
+1. Make the local server accessible to your network:
+   ```bash
+   npx vite --host
+   ```
+2. Open the printed **Network** URL (e.g. `http://192.168.0.20:5173/`) in your phone's browser (phone must be on the same Wi-Fi network).
+3. Add to Home Screen:
+   - **iOS Safari**: Tap the **Share** button -> scroll down -> tap **Add to Home Screen**.
+   - **Android Chrome**: Tap the three-dot menu -> tap **Add to Home Screen** / **Install App**.
+
+---
+
+### Option B: Standalone Native Mobile App (Capacitor)
+If you want a separate, packaged application (like an `.apk` installer file for Android or a compiled Xcode project for iOS):
+
+#### 1. Compile and Sync Staged Code
+Compile the Vite web bundle and synchronize the static assets to the native Android and iOS folders:
 ```bash
-npx vite --host
+npm run cap:sync
 ```
-Copy the **Network** URL (e.g., `http://192.168.0.20:5173/`).
 
-### Step 2: Install on Your Device
-1. Connect your phone to the **same Wi-Fi network** as your computer.
-2. Open the Network URL in your mobile browser.
-3. Add the application to your Home Screen:
-   * **iOS Safari:** Tap the **Share** button (box with an up-arrow), scroll down, and tap **Add to Home Screen**.
-   * **Android Chrome:** Tap the three-dot menu icon in the top right, and select **Add to Home Screen** (or **Install App**).
-4. Launch the **ZenStudy** icon from your home screen. It will open in a standalone, full-screen view and remain fully functional offline!
+#### 2. Build for Android (.apk)
+* Install [Android Studio](https://developer.android.com/studio) on your computer.
+* Open the Android platform folder inside Android Studio:
+  ```bash
+  npm run cap:open-android
+  ```
+* Connect your Android phone to your computer via USB (with **USB Debugging** enabled in Developer Settings).
+* Click the **Run** button (green play icon) in the Android Studio toolbar to compile and install it directly to your phone.
+* Alternatively, select **Build > Build Bundle(s) / APK(s) > Build APK(s)** to compile the standalone `.apk` installer.
+
+#### 3. Build for iOS (Requires macOS)
+* Install Xcode from the Mac App Store.
+* Open the iOS project in Xcode:
+  ```bash
+  npx cap open ios
+  ```
+* Select your connected iPhone as the target device and click the **Run** button to compile and install.
+
