@@ -3,7 +3,7 @@
 
   <h1>⚡ ZenStudy</h1>
 
-  <p><strong>Real-time Personal Student Planner & Focus Companion (PWA)</strong></p>
+  <p><strong>Real-time Personal Student Planner AND Focus Companion (PWA)</strong></p>
 
   <p>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
