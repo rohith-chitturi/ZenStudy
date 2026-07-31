@@ -6,16 +6,46 @@
   <p><strong>Real-time Personal Student Planner & Focus Companion (PWA)</strong></p>
 
   <p>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+    <img src="https://img.shields.io/badge/PWA-Ready-orange.svg" alt="PWA Ready">
+  </p>
+
+  <p>
+    <a href="#-why-zenstudy">Why ZenStudy?</a> •
+    <a href="#-screenshots">Screenshots</a> •
     <a href="#-features">Features</a> •
     <a href="#%EF%B8%8F-tech-stack">Tech Stack</a> •
-    <a href="#-getting-started">Installation</a> •
-    <a href="#-mobile-deployment-options">Deployment</a>
+    <a href="#-getting-started">Installation</a>
   </p>
 </div>
 
 ---
 
-ZenStudy is a premium, mobile-first, offline-capable student dashboard designed to help you track tasks, organize class schedules, time focus sessions, and monitor academic performance metrics—all local to your device, with no login or database authentication required. **Your data stays yours.**
+ZenStudy is a premium, mobile-first, offline-capable student dashboard designed to help you track tasks, organize class schedules, time focus sessions, and monitor academic performance metrics—all local to your device, with no login or database authentication required. **Your data stays securely on your device.**
+
+---
+
+## 💡 Why ZenStudy?
+
+Most planner apps require accounts, display intrusive ads, or need constant internet connectivity. ZenStudy was built with a different philosophy:
+- 🔒 **Privacy-First:** All data stays in your browser's local storage.
+- 🚀 **Lightning Fast:** Zero network latency ensures instant loading.
+- 🔋 **Offline-Capable:** Fully functional even without an internet connection.
+- 🎨 **Distraction-Free:** Clean, modern, glassmorphism-inspired UI to help you focus.
+
+---
+
+## 📸 Screenshots
+
+> **Note:** Add your actual app screenshots in a `/public/screenshots` folder and update these paths!
+
+<div align="center">
+  <img src="https://via.placeholder.com/220x450.png?text=Dashboard+View" width="22%" alt="Dashboard" />&nbsp;&nbsp;
+  <img src="https://via.placeholder.com/220x450.png?text=Task+Manager" width="22%" alt="Tasks" />&nbsp;&nbsp;
+  <img src="https://via.placeholder.com/220x450.png?text=Pomodoro+Timer" width="22%" alt="Timer" />&nbsp;&nbsp;
+  <img src="https://via.placeholder.com/220x450.png?text=Weekly+Timetable" width="22%" alt="Timetable" />
+</div>
 
 ---
 
