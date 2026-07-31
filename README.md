@@ -1,10 +1,21 @@
-# ⚡ ZenStudy
+<div align="center">
+  <img src="public/icon.svg" alt="ZenStudy Logo" width="120" />
 
-> Real-time Personal Student Planner & Focus Companion (PWA)
+  <h1>⚡ ZenStudy</h1>
 
-ZenStudy is a premium, mobile-first, offline-capable student dashboard designed to help you track tasks, organize class schedules, time focus sessions, and monitor academic performance metrics—all local to your device, with no login or database authentication required.
+  <p><strong>Real-time Personal Student Planner & Focus Companion (PWA)</strong></p>
 
-![ZenStudy Logo](public/icon.svg)
+  <p>
+    <a href="#-features">Features</a> •
+    <a href="#%EF%B8%8F-tech-stack">Tech Stack</a> •
+    <a href="#-getting-started">Installation</a> •
+    <a href="#-mobile-deployment-options">Deployment</a>
+  </p>
+</div>
+
+---
+
+ZenStudy is a premium, mobile-first, offline-capable student dashboard designed to help you track tasks, organize class schedules, time focus sessions, and monitor academic performance metrics—all local to your device, with no login or database authentication required. **Your data stays yours.**
 
 ---
 
@@ -46,17 +57,20 @@ ZenStudy is a premium, mobile-first, offline-capable student dashboard designed 
 * **Database & Caching:** Web **LocalStorage** (for states and metrics) + **IndexedDB** (for media audio files)
 * **Audio System:** Web Audio API (programmatic oscillator chime/gong synthesis)
 * **PWA Engine:** Service Worker (`sw.js`) + Web App Manifest (`manifest.json`)
+* **Mobile Runtime:** Capacitor for standalone native deployment
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed.
+Ensure you have [Node.js](https://nodejs.org/) (v16+) installed on your machine.
 
 ### 2. Installation
 Clone the repository and install developer dependencies:
 ```bash
+git clone https://github.com/yourusername/ZenStudy.git
+cd ZenStudy
 npm install
 ```
 
@@ -65,7 +79,7 @@ Start the local development server:
 ```bash
 npm run dev
 ```
-Open **[http://localhost:5173/](http://localhost:5173/)** in your browser.
+Open **[http://localhost:5173/](http://localhost:5173/)** in your browser to view the app.
 
 ### 4. Build for Production
 Bundle and optimize static assets into the `dist/` directory:
@@ -119,4 +133,15 @@ npm run cap:sync
   npx cap open ios
   ```
 * Select your connected iPhone as the target device and click the **Run** button to compile and install.
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to check out the [issues page](https://github.com/yourusername/ZenStudy/issues) if you have any ideas or find bugs.
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
 
